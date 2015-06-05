@@ -1,3 +1,8 @@
+"Script Title: Indent Detector
+"Script Version: 0.0.2
+"Author: luochen1990
+"Last Edited: 2015 June 5
+
 if exists('s:loaded')
 	finish
 else
@@ -28,8 +33,8 @@ func indentdetector:detect(autoadjust)
 			elseif indentdetector:search_nearby('^    [^\t ]')
 				let spacenum = 4
 			endif
-			if a:autoadjust && spacenum
-				let n = spacenum
+			if a:autoadjust
+				let n = spacenum ? spacenum : 4
 				exec 'setl expandtab smarttab tabstop='.n.' shiftwidth='.n.' softtabstop='.n
 			endif
 			return 'space * '.(spacenum ? spacenum : '>4')
@@ -45,10 +50,10 @@ func indentdetector:hook()
 	let rst = indentdetector:detect(1)
 	if &readonly == 0
 		if rst == 'mixed'
-			echohl ErrorMsg | echo 'mixed indent' | echohl None 
+			echohl ErrorMsg | echom 'mixed indent' | echohl None 
 		elseif rst[0] == 's' "space
 			if rst[8] == '>' "too many
-				echohl WarningMsg | echo 'too many leading spaces here.' | echohl None 
+				echohl WarningMsg | echom 'too many leading spaces here.' | echohl None 
 			else
 				echo 'indent: '.rst
 			endif
@@ -56,4 +61,4 @@ func indentdetector:hook()
 	endif
 endfunc
 
-auto bufenter * call indentdetector:hook()
+auto bufenter,bufwritepost * call indentdetector:hook()
