@@ -6,7 +6,7 @@ Indent Detector
 features
 --------
 
-- detect mixed indent and echo warnning on `bufEnter` and `bufWrite` automatically.
+- detect mixed indent(indent with both spaces and tabs) and echo warnning on `bufEnter` and `bufWrite` automatically.
 - switch setting about indenting to fit the current indenting style automatically.
 - detecting time is limited, so you don't need to worry about opening huge files.
 
