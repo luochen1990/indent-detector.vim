@@ -19,7 +19,7 @@ Bundle 'luochen1990/indent-detector.vim'
 
 ### manually
 
-put `indentdetector.vim` in directory `~/.vim/plugin` or `vimfiles/plugin`
+put `indentdetector.vim` to directory `~/.vim/plugin` or `vimfiles/plugin`
 
 >	remenber to restart your vim after installation
 
