@@ -1,7 +1,7 @@
 "Script Title: Indent Detector
-"Script Version: 0.0.2
+"Script Version: 0.0.3
 "Author: luochen1990
-"Last Edited: 2015 June 5
+"Last Edited: 2015 June 6
 
 if exists('s:loaded')
 	finish
@@ -46,19 +46,27 @@ func indentdetector:detect(autoadjust)
 	endif
 endfunc
 
-func indentdetector:hook()
-	let rst = indentdetector:detect(1)
-	if &readonly == 0
+" echolevel: 0 - none; 1 - error; 2 - warnning; 3 - info (all)
+func indentdetector:hook(autoadjust, echolevel)
+	if &readonly == 0 "if file writeable
+		let rst = indentdetector:detect(a:autoadjust)
 		if rst == 'mixed'
-			echohl ErrorMsg | echom 'mixed indent' | echohl None 
+			if a:echolevel > 0
+				echohl ErrorMsg | echom 'mixed indent' | echohl None 
+			endif
 		elseif rst[0] == 's' "space
 			if rst[8] == '>' "too many
-				echohl WarningMsg | echom 'too many leading spaces here.' | echohl None 
+				if a:echolevel > 1
+					echohl WarningMsg | echom 'too many leading spaces here.' | echohl None 
+				endif
 			else
-				echo 'indent: '.rst
+				if a:echolevel > 2
+					echo 'indent: '.rst
+				endif
 			endif
 		endif
 	endif
 endfunc
 
-auto bufenter,bufwritepost * call indentdetector:hook()
+auto bufenter * call indentdetector:hook(1, 3)
+auto bufwritepost * call indentdetector:hook(0, 2)
