@@ -1,7 +1,7 @@
 "Script Title: Indent Detector
-"Script Version: 0.0.4
+"Script Version: 0.0.5
 "Author: luochen1990
-"Last Edited: 2015 June 7
+"Last Edited: 2015 July 6
 
 if exists('s:loaded')
 	finish
@@ -69,4 +69,4 @@ func indent_detector#hook(autoadjust, echolevel)
 endfunc
 
 auto bufenter * call indent_detector#hook(1, 3)
-auto bufwritepost * call indent_detector#hook(0, 2)
+auto bufwritepost * call indent_detector#hook(1, 2)
