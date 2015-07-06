@@ -9,14 +9,14 @@ else
 	let s:loaded = 1
 endif
 
-func indentdetector#search_nearby(pat)
+func indent_detector#search_nearby(pat)
 	return search(a:pat, 'Wnc', 0, 20) > 0 || search(a:pat, 'Wnb', 0, 20) > 0
 endfunc
 
-func indentdetector#detect(autoadjust)
-	let leadtab = indentdetector#search_nearby('^\t')
-	let leadspace = indentdetector#search_nearby('^ ')
-	if leadtab + leadspace < 2 && indentdetector#search_nearby('^\(\t\+ \| \+\t\)') == 0
+func indent_detector#detect(autoadjust)
+	let leadtab = indent_detector#search_nearby('^\t')
+	let leadspace = indent_detector#search_nearby('^ ')
+	if leadtab + leadspace < 2 && indent_detector#search_nearby('^\(\t\+ \| \+\t\)') == 0
 		if leadtab
 			if a:autoadjust
 				setl noexpandtab nosmarttab tabstop=4 shiftwidth=4 softtabstop=4
@@ -24,13 +24,13 @@ func indentdetector#detect(autoadjust)
 			return 'tab'
 		elseif leadspace
 			let spacenum = 0
-			if indentdetector#search_nearby('^ [^\t ]')
+			if indent_detector#search_nearby('^ [^\t ]')
 				let spacenum = 1
-			elseif indentdetector#search_nearby('^  [^\t ]')
+			elseif indent_detector#search_nearby('^  [^\t ]')
 				let spacenum = 2
-			elseif indentdetector#search_nearby('^   [^\t ]')
+			elseif indent_detector#search_nearby('^   [^\t ]')
 				let spacenum = 3
-			elseif indentdetector#search_nearby('^    [^\t ]')
+			elseif indent_detector#search_nearby('^    [^\t ]')
 				let spacenum = 4
 			endif
 			if a:autoadjust
@@ -47,9 +47,9 @@ func indentdetector#detect(autoadjust)
 endfunc
 
 " echolevel: 0 - none; 1 - error; 2 - warnning; 3 - info (all)
-func indentdetector#hook(autoadjust, echolevel)
+func indent_detector#hook(autoadjust, echolevel)
 	if &readonly == 0 "if file writeable
-		let rst = indentdetector#detect(a:autoadjust)
+		let rst = indent_detector#detect(a:autoadjust)
 		if rst == 'mixed'
 			if a:echolevel > 0
 				echohl ErrorMsg | echom 'mixed indent' | echohl None 
@@ -68,5 +68,5 @@ func indentdetector#hook(autoadjust, echolevel)
 	endif
 endfunc
 
-auto bufenter * call indentdetector#hook(1, 3)
-auto bufwritepost * call indentdetector#hook(0, 2)
+auto bufenter * call indent_detector#hook(1, 3)
+auto bufwritepost * call indent_detector#hook(0, 2)
