@@ -81,7 +81,9 @@ endfunc
 call s:init_variable('g:indent_detector_tabstop', &tabstop)
 call s:init_variable('g:indent_detector_shiftwidth', &shiftwidth)
 call s:init_variable('g:indent_detector_softtabstop', &softtabstop)
+call s:init_variable('g:indent_detector_echolevel_enter', 3)
+call s:init_variable('g:indent_detector_echolevel_write', 2)
 
-auto bufenter * call indent_detector#hook(1, 3)
-auto bufwritepost * call indent_detector#hook(1, 2)
+auto bufenter * call indent_detector#hook(1, g:indent_detector_echolevel_enter)
+auto bufwritepost * call indent_detector#hook(1, g:indent_detector_echolevel_write)
 

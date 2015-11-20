@@ -38,4 +38,6 @@ settings
 - `let g:indent_detector_tabstop=` - set tabstop, default is global tabstop settings
 - `let g:indent_detector_shiftwidth=` - set shiftwidth, default is global shiftwidth settings
 - `let g:indent_detector_softtabstop=` - set softtabstop, default is global softtabstop settings
+- `let g:indent_detector_echolevel_enter=` - default is 3
+- `let g:indent_detector_echolevel_write=` - default is 2
 
