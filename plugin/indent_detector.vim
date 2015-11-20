@@ -1,5 +1,5 @@
 "Script Title: Indent Detector
-"Script Version: 0.0.5
+"Script Version: 0.0.6
 "Author: luochen1990
 "Last Edited: 2015 July 6
 
@@ -8,6 +8,16 @@ if exists('s:loaded')
 else
 	let s:loaded = 1
 endif
+
+function s:init_variable(var, value)
+	if !exists(a:var)
+		if type(a:value) == type("")
+			exec 'let ' . a:var . ' = ' . "'" . a:value . "'"
+		else
+			exec 'let ' . a:var . ' = ' .	a:value
+		endif
+	endif
+endfunction
 
 func indent_detector#search_nearby(pat)
 	return search(a:pat, 'Wnc', 0, 20) > 0 || search(a:pat, 'Wnb', 0, 20) > 0
@@ -19,7 +29,7 @@ func indent_detector#detect(autoadjust)
 	if leadtab + leadspace < 2 && indent_detector#search_nearby('^\(\t\+ \| \+\t\)') == 0
 		if leadtab
 			if a:autoadjust
-				setl noexpandtab nosmarttab tabstop=4 shiftwidth=4 softtabstop=4
+				exec 'setl noexpandtab nosmarttab tabstop='.g:indent_detector_tabstop.' shiftwidth='.g:indent_detector_shiftwidth.' softtabstop='.g:indent_detector_softtabstop
 			endif
 			return 'tab'
 		elseif leadspace
@@ -34,7 +44,7 @@ func indent_detector#detect(autoadjust)
 				let spacenum = 4
 			endif
 			if a:autoadjust
-				let n = spacenum ? spacenum : 4
+				let n = spacenum ? spacenum : g:indent_detector_shiftwidth
 				exec 'setl expandtab smarttab tabstop='.n.' shiftwidth='.n.' softtabstop='.n
 			endif
 			return 'space * '.(spacenum ? spacenum : '>4')
@@ -68,5 +78,10 @@ func indent_detector#hook(autoadjust, echolevel)
 	endif
 endfunc
 
+call s:init_variable('g:indent_detector_tabstop', &tabstop)
+call s:init_variable('g:indent_detector_shiftwidth', &shiftwidth)
+call s:init_variable('g:indent_detector_softtabstop', &softtabstop)
+
 auto bufenter * call indent_detector#hook(1, 3)
 auto bufwritepost * call indent_detector#hook(1, 2)
+
