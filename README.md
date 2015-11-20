@@ -41,3 +41,5 @@ settings
 - `let g:indent_detector_echolevel_enter=` - default is 3
 - `let g:indent_detector_echolevel_write=` - default is 2
 
+> echolevel: 0 - none; 1 - error; 2 - warnning; 3 - info (all)
+
