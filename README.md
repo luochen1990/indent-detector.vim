@@ -35,7 +35,7 @@ put `indentdetector.vim` to directory `~/.vim/plugin` or `vimfiles/plugin`
 settings
 -------
 
-`let g:indent_detector_tabstop=` - set tabstop, default is global tabstop settings
-`let g:indent_detector_shiftwidth=` - set shiftwidth, default is global shiftwidth settings
-`let g:indent_detector_softtabstop=` - set softtabstop, default is global softtabstop settings
+- `let g:indent_detector_tabstop=` - set tabstop, default is global tabstop settings
+- `let g:indent_detector_shiftwidth=` - set shiftwidth, default is global shiftwidth settings
+- `let g:indent_detector_softtabstop=` - set softtabstop, default is global softtabstop settings
 
