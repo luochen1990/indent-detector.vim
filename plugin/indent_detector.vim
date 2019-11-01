@@ -29,7 +29,7 @@ func indent_detector#detect(autoadjust)
 	if leadtab + leadspace < 2 && indent_detector#search_nearby('^\(\t\+ \| \+\t\)') == 0
 		if leadtab
 			if a:autoadjust
-				exec 'setl noexpandtab nosmarttab tabstop='.g:indent_detector_tabstop.' shiftwidth='.g:indent_detector_shiftwidth.' softtabstop='.g:indent_detector_softtabstop
+				exec 'setl noexpandtab nosmarttab tabstop='.g:indent_detector_indentation.' shiftwidth='.g:indent_detector_indentation.' softtabstop='.g:indent_detector_indentation
 			endif
 			return 'tab'
 		elseif leadspace
@@ -44,7 +44,7 @@ func indent_detector#detect(autoadjust)
 				let spacenum = 4
 			endif
 			if a:autoadjust
-				let n = spacenum ? spacenum : g:indent_detector_shiftwidth
+				let n = spacenum ? spacenum : g:indent_detector_indentation
 				exec 'setl expandtab smarttab tabstop='.n.' shiftwidth='.n.' softtabstop='.n
 			endif
 			return 'space * '.(spacenum ? spacenum : '>4')
@@ -62,12 +62,12 @@ func indent_detector#hook(autoadjust, echolevel)
 		let rst = indent_detector#detect(a:autoadjust)
 		if rst == 'mixed'
 			if a:echolevel > 0
-				echohl ErrorMsg | echom 'mixed indent' | echohl None 
+				echohl ErrorMsg | echom 'mixed indent' | echohl None
 			endif
 		elseif rst[0] == 's' "space
 			if rst[8] == '>' "too many
 				if a:echolevel > 1
-					echohl WarningMsg | echom 'too many leading spaces here.' | echohl None 
+					echohl WarningMsg | echom 'too many leading spaces here.' | echohl None
 				endif
 			else
 				if a:echolevel > 2
@@ -78,9 +78,7 @@ func indent_detector#hook(autoadjust, echolevel)
 	endif
 endfunc
 
-call s:init_variable('g:indent_detector_tabstop', &tabstop)
-call s:init_variable('g:indent_detector_shiftwidth', &shiftwidth)
-call s:init_variable('g:indent_detector_softtabstop', &softtabstop)
+call s:init_variable('g:indent_detector_indentation', 4)
 call s:init_variable('g:indent_detector_echolevel_enter', 3)
 call s:init_variable('g:indent_detector_echolevel_write', 2)
 
