@@ -32,3 +32,14 @@ put `indentdetector.vim` to directory `~/.vim/plugin` or `vimfiles/plugin`
 
 >	remenber to restart your vim after installation
 
+settings
+-------
+
+- `let g:indent_detector_tabstop=` - set tabstop, default is global tabstop settings
+- `let g:indent_detector_shiftwidth=` - set shiftwidth, default is global shiftwidth settings
+- `let g:indent_detector_softtabstop=` - set softtabstop, default is global softtabstop settings
+- `let g:indent_detector_echolevel_enter=` - default is 3
+- `let g:indent_detector_echolevel_write=` - default is 2
+
+> echolevel: 0 - none; 1 - error; 2 - warnning; 3 - info (all)
+
